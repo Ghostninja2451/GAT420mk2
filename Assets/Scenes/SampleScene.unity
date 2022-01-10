@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 314637436}
   - component: {fileID: 314637438}
   - component: {fileID: 314637437}
+  - component: {fileID: 314637439}
   - component: {fileID: 314637435}
   - component: {fileID: 314637434}
   - component: {fileID: 314637433}
@@ -250,6 +251,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perception: {fileID: 314637437}
+  steering: {fileID: 314637439}
+  maxSpeed: 4
+  maxForce: 5
+--- !u!114 &314637439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314637432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d37e38e0f83b7a499df4cf5413b77e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,11 @@ using UnityEngine;
 public class AutonomusAgent : Agent
 {
     [SerializeField] Perception perception;
+    [SerializeField] Steering steering;
+
+    public float maxSpeed;
+    public float maxForce;
+
     public Vector3 velocity { get; set; } = Vector3.zero;
 
     // Update is called once per frame
@@ -18,11 +23,16 @@ public class AutonomusAgent : Agent
             Debug.DrawLine(transform.position, gameObjects[0].transform.position);
 
             //Vector3 force = gameObjects[0].transform.position - transform.position;
-            Vector3 force =  transform.position - gameObjects[0].transform.position ;
-            acceleration += force.normalized * 3;
+            Vector3 force = steering.Flee(this, gameObjects[0]);
+            acceleration += force;
         }
 
         velocity += acceleration * Time.deltaTime;
+        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         transform.position += velocity * Time.deltaTime;
+        if(velocity.sqrMagnitude > 0.1f)
+        {
+            transform.rotation = Quaternion.LookRotation(velocity);
+        }
     }
 }
