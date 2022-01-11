@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     [SerializeField] float speed;
     void Update()
     {
@@ -20,5 +13,6 @@ public class Player : MonoBehaviour
         direction.z = Input.GetAxis("Vertical");
 
         transform.position += direction * speed * Time.deltaTime;
+        transform.position = Utility.Wrap(transform.position, new Vector3(-10, -10, -10), new Vector3(10, 10, 10));
     }
 }

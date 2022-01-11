@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Player
-  radius: 50
-  maxAngle: 0
+  radius: 5
+  maxAngle: 90
 --- !u!114 &314637438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d37e38e0f83b7a499df4cf5413b77e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wanderDistance: 1
+  wanderRadius: 3
+  wanderDisplacement: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,18 @@ public class Steering : MonoBehaviour
         return force;
     }
 
+    public  Vector3 Wander(AutonomusAgent agent)
+    {
+        wanderAngle = wanderAngle + Random.Range(-wanderDisplacement, wanderDisplacement);
+        Quaternion rotaion = Quaternion.AngleAxis(wanderAngle,Vector3.up);
+        Vector3 point = rotaion * (Vector3.forward * wanderRadius);
+        Vector3 forward = agent.transform.forward * wanderDistance;
+        Vector3 force = CalculateSteering(agent, forward + point);
+
+        return force;
+        
+    }
+
     Vector3 CalculateSteering(AutonomusAgent agent, Vector3 vector)
     {
         Vector3 direction = vector.normalized;

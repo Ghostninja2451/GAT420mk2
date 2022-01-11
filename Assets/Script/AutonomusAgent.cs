@@ -23,8 +23,13 @@ public class AutonomusAgent : Agent
             Debug.DrawLine(transform.position, gameObjects[0].transform.position);
 
             //Vector3 force = gameObjects[0].transform.position - transform.position;
-            Vector3 force = steering.Flee(this, gameObjects[0]);
+            Vector3 force = steering.Seek(this, gameObjects[0]);
             acceleration += force;
+
+        }
+        else
+        {
+            acceleration += steering.Wander(this);
         }
 
         velocity += acceleration * Time.deltaTime;
@@ -34,5 +39,8 @@ public class AutonomusAgent : Agent
         {
             transform.rotation = Quaternion.LookRotation(velocity);
         }
+
+        transform.position = Utility.Wrap(transform.position, new Vector3(-10, -10, -10), new Vector3(10, 10, 10));
+
     }
 }
