@@ -76,7 +76,7 @@ public class Steering : MonoBehaviour
         return force;
     }
 
-    Vector3 CalculateSteering(AutonomusAgent agent, Vector3 vector)
+    public Vector3 CalculateSteering(AutonomusAgent agent, Vector3 vector)
     {
         Vector3 direction = vector.normalized;
         Vector3 desired = direction * agent.maxSpeed;

@@ -6,6 +6,7 @@ public class AutonomusAgent : Agent
 {
     [SerializeField] Perception perception;
     [SerializeField] Perception flockperception;
+    [SerializeField] ObsticlePerception obsticlePerception;
     [SerializeField] Steering steering;
     [SerializeField] AutomonousAgentData agentData;
 
@@ -26,12 +27,13 @@ public class AutonomusAgent : Agent
         {
 
             //Vector3 force = gameObjects[0].transform.position - transform.position;
-            acceleration = steering.Seek(this, gameObjects[0]) * agentData.seekWeight;
-            acceleration = steering.Flee(this, gameObjects[0]) * agentData.fleeWeight;
-            
+            acceleration += steering.Seek(this, gameObjects[0]) * agentData.seekWeight;
 
+            acceleration += steering.Flee(this, gameObjects[0]) * agentData.fleeWeight;
+           
         }
-        else
+        // wander
+        if (acceleration.sqrMagnitude <= maxForce * 0.1f)
         {
             acceleration += steering.Wander(this);
         }
@@ -43,16 +45,24 @@ public class AutonomusAgent : Agent
             acceleration += steering.Seperation(this, gameObjects, agentData.separationRadius) * agentData.separationWeight;
             acceleration += steering.Alignment(this, gameObjects) * agentData.alignmentWeight;
         }
-        
+        // obstacle avoidance
+        if (obsticlePerception.IsObstacleInFront())
+        {
+            Vector3 direction = obsticlePerception.GetOpenDirection();
+            acceleration += steering.CalculateSteering(this, direction) * agentData.obstacleWeight;
+        }
+
+
         velocity += acceleration * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         transform.position += velocity * Time.deltaTime;
+
         if(velocity.sqrMagnitude > 0.1f)
         {
             transform.rotation = Quaternion.LookRotation(velocity);
         }
 
-        transform.position = Utility.Wrap(transform.position, new Vector3(-10, -10, -10), new Vector3(10, 10, 10));
+        transform.position = Utility.Wrap(transform.position, new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
 
     }
 }

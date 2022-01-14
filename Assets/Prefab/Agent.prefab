@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6706530311378704753}
   - component: {fileID: 6706530311378704755}
+  - component: {fileID: 7316750875569708454}
   - component: {fileID: 6706530311378704752}
   - component: {fileID: 7468762316807102767}
   - component: {fileID: 6706530311378704754}
+  - component: {fileID: 6728454055160495147}
   - component: {fileID: 6706530311378704758}
   - component: {fileID: 6706530311378704759}
   - component: {fileID: 6706530311378704756}
@@ -35,6 +37,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6706530312730391537}
+  - {fileID: 7671135902431278112}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,10 +53,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44953c13eeb2f6a4da75eb9bdabd2501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perception: {fileID: 6706530311378704752}
+  perception: {fileID: 6728454055160495147}
   flockperception: {fileID: 7468762316807102767}
+  obsticlePerception: {fileID: 7316750875569708454}
   steering: {fileID: 6706530311378704754}
   agentData: {fileID: 11400000, guid: a717f9bdd1f5e94429327c304cadff56, type: 2}
+--- !u!114 &7316750875569708454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706530311378704757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbcdf182a6ded1408df30374b05b795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 5
+  radius: 1
+  numRaycast: 20
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &6706530311378704752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Player
-  radius: 5
+  radius: 10
   maxAngle: 120
 --- !u!114 &7468762316807102767
 MonoBehaviour:
@@ -82,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Agent1
-  radius: 5
+  radius: 10
   maxAngle: 180
 --- !u!114 &6706530311378704754
 MonoBehaviour:
@@ -99,6 +121,23 @@ MonoBehaviour:
   wanderDistance: 1
   wanderRadius: 3
   wanderDisplacement: 5
+--- !u!114 &6728454055160495147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706530311378704757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ab460418e8e134a8872fd36d0edd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagName: Player
+  raycastTransform: {fileID: 7671135902431278112}
+  distance: 10
+  angle: 90
+  numRaycast: 20
 --- !u!33 &6706530311378704758
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -257,3 +296,33 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &9048375263897626125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7671135902431278112}
+  m_Layer: 0
+  m_Name: Eye
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7671135902431278112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9048375263897626125}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6706530311378704753}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
