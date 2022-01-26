@@ -21,6 +21,7 @@ public class DistancePerception : Perception
                 Vector3 direction = (collider.transform.position - transform.position).normalized;
                 float cos = Vector3.Dot(transform.forward, direction);
                 float angle = Mathf.Acos(cos) * Mathf.Rad2Deg;
+
                 if(angle <= maxAngle)
                 {
                     result.Add(collider.gameObject);

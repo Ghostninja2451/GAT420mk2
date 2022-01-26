@@ -10,16 +10,9 @@ public class AutonomusAgent : Agent
     [SerializeField] Steering steering;
     [SerializeField] AutomonousAgentData agentData;
 
-    public float maxSpeed { get { return agentData.maxSpeed; } }
-    public float maxForce { get { return agentData.maxForce; } }
-
-    public Vector3 velocity { get; set; } = Vector3.zero;
-
     // Update is called once per frame
     void Update()
     {
-        Vector3 acceleration = Vector3.zero;
-
         GameObject[] gameObjects = perception.GetGameObjects();
 
         //seek / flee
@@ -27,42 +20,30 @@ public class AutonomusAgent : Agent
         {
 
             //Vector3 force = gameObjects[0].transform.position - transform.position;
-            acceleration += steering.Seek(this, gameObjects[0]) * agentData.seekWeight;
+            movement.ApplyForce(steering.Seek(this, gameObjects[0]) * agentData.seekWeight);
 
-            acceleration += steering.Flee(this, gameObjects[0]) * agentData.fleeWeight;
+            movement.ApplyForce(steering.Flee(this, gameObjects[0]) * agentData.fleeWeight);
            
         }
         // wander
-        if (acceleration.sqrMagnitude <= maxForce * 0.1f)
+        if (movement.acceleration.sqrMagnitude <= movement.maxForce * 0.1f)
         {
-            acceleration += steering.Wander(this);
+            movement.ApplyForce(steering.Wander(this)); 
         }
         //flocking
         gameObjects = flockperception.GetGameObjects();
         if(gameObjects.Length != 0)
         {
-            acceleration += steering.Cohesion(this, gameObjects) * agentData.cohesionWeight;
-            acceleration += steering.Seperation(this, gameObjects, agentData.separationRadius) * agentData.separationWeight;
-            acceleration += steering.Alignment(this, gameObjects) * agentData.alignmentWeight;
+            movement.ApplyForce(steering.Cohesion(this, gameObjects) * agentData.cohesionWeight);
+            movement.ApplyForce(steering.Seperation(this, gameObjects, agentData.separationRadius) * agentData.separationWeight);
+            movement.ApplyForce(steering.Alignment(this, gameObjects) * agentData.alignmentWeight);
         }
         // obstacle avoidance
         if (obsticlePerception.IsObstacleInFront())
         {
             Vector3 direction = obsticlePerception.GetOpenDirection();
-            acceleration += steering.CalculateSteering(this, direction) * agentData.obstacleWeight;
+            movement.ApplyForce(steering.CalculateSteering(this, direction) * agentData.obstacleWeight);
         }
-
-
-        velocity += acceleration * Time.deltaTime;
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-        transform.position += velocity * Time.deltaTime;
-
-        if(velocity.sqrMagnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(velocity);
-        }
-
-        transform.position = Utility.Wrap(transform.position, new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
 
     }
 }
