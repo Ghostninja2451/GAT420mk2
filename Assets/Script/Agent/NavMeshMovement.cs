@@ -8,9 +8,9 @@ public class NavMeshMovement : Movement
 {
     public override Vector3 velocity { get => navMeshAgent.velocity; set => navMeshAgent.velocity = value; }
 
-    NavMeshAgent navMeshAgent;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] NavMeshAgent navMeshAgent;
+
+    private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -42,5 +42,10 @@ public class NavMeshMovement : Movement
         navMeshAgent.isStopped = true;
     }
 
+    public override Vector3 destination
+    {
+        get => navMeshAgent.destination;
+        set => navMeshAgent.destination = value;
+    }
 
 }

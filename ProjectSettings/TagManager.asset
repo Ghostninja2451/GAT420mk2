@@ -7,6 +7,7 @@ TagManager:
   - Agent1
   - WaypointAgent
   - SearchAgent
+  - Agent2
   layers:
   - Default
   - TransparentFX
